@@ -41,7 +41,19 @@ server.get('/api/projects/:id', (req, res) => {
       res.status(404).json({message: 'project not found'})
     }
   })
-  .catch(err => res.status(500).json({message: 'Something went wronge'}))
+  .catch(err => res.status(500).json(err));
+});
+
+// POST NEW PORJECT
+server.post('/api/projects', async (req, res) => {
+  try {
+    const { name, description, complete, action } = req.body;
+
+    const newProject = await projectsDB.create({ name, description, complete });
+    res.status(200).json(newProject);
+  } catch(err) {
+    res.status(500).json(err);
+  }
 });
 
 server.listen(PORT, console.log(PORT));
