@@ -56,4 +56,14 @@ server.post('/api/projects', async (req, res) => {
   }
 });
 
+// GET ACTIONS
+server.get('/api/actions', async (req, res) => {
+  try {
+    const actions = await actionsDB.get();
+    res.status(200).json(actions);
+  } catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 server.listen(PORT, console.log(PORT));
