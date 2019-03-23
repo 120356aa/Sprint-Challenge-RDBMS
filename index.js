@@ -66,4 +66,16 @@ server.get('/api/actions', async (req, res) => {
   }
 });
 
+// POST NEW ACTION
+server.post('/api/actions', async (req, res) => {
+  try {
+    const { description, notes, project_id } = req.body;
+    const newAction = await actionsDB.create({ description, notes, project_id });
+
+    res.status(200).json(newAction);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 server.listen(PORT, console.log(PORT));
